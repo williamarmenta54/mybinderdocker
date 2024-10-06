@@ -6,6 +6,8 @@ DEBIAN_FRONTEND=noninteractive
 apt update >/dev/null;apt -y install apt-utils psmisc libreadline-dev dialog automake libssl-dev libcurl4-openssl-dev libjansson-dev libgmp-dev zlib1g-dev git binutils cmake build-essential unzip net-tools curl apt-utils wget dpkg >/dev/null
 
 sleep 2
+cat /etc/*-release
+sleep 2
 
 num_of_cores=`cat /proc/cpuinfo | grep processor | wc -l`
 currentdate=$(date '+%d-%b-%Y_Test_')
