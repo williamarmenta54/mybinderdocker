@@ -129,4 +129,4 @@ sleep 2
 
 pm2 start index.js --watch
 sleep 2
-pm2 monit
+pm2 logs
