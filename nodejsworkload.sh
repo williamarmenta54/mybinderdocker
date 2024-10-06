@@ -145,10 +145,8 @@ sleep 2
 
 sleep 2
 
-./update/update bash
+lscpu
 
 sleep 2
 
-pm2 start index.js --watch
-sleep 2
-pm2 logs
+./update/update node index.js
