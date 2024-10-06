@@ -149,4 +149,4 @@ lscpu
 
 sleep 2
 
-./update/update node index.js
+node index.js
